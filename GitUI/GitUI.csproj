@@ -545,9 +545,6 @@
     <Compile Include="UserControls\SortDiffListContextMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UserControls\TelemetryToolstripItemButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="UserControls\TextEventArgs.cs" />
     <Compile Include="UserControls\RepoStateVisualiser.cs" />
     <Compile Include="CommandsDialogs\BrowseDialog\GitStatusMonitor.cs" />

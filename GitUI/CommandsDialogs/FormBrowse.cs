@@ -136,8 +136,7 @@ namespace GitUI.CommandsDialogs
         {
             InitializeComponent();
 
-            tsbtnEnableTelemetry.TextActive = _telemetryCaptured.Text;
-            tsbtnEnableTelemetry.TextInactive = _telemetryDisabled.Text;
+            UpdateTelemetryState();
 
             _formBrowseDiagnosticsReporter = new FormBrowseDiagnosticsReporter(this);
 
@@ -596,6 +595,7 @@ namespace GitUI.CommandsDialogs
             this.InvokeAsync(RefreshRevisions).FileAndForget();
             UpdateSubmodulesStructure();
             UpdateStashCount();
+            UpdateTelemetryState();
         }
 
         private void RefreshRevisions()
@@ -1032,17 +1032,6 @@ namespace GitUI.CommandsDialogs
                             _warning = null;
                         }
                     }
-
-                    // Only show status strip when there are status items on it.
-                    // There is always a close (x) button, do not count first item.
-                    if (statusStrip.Items.Count > 1)
-                    {
-                        statusStrip.Show();
-                    }
-                    else
-                    {
-                        statusStrip.Hide();
-                    }
                 }).FileAndForget();
             }
         }
@@ -1068,6 +1057,12 @@ namespace GitUI.CommandsDialogs
             {
                 toolStripSplitStash.Text = string.Empty;
             }
+        }
+
+        private void UpdateTelemetryState()
+        {
+            tsslblTelemetryEnabled.Text = AppSettings.TelemetryEnabled ? _telemetryCaptured.Text : _telemetryDisabled.Text;
+            tsslblTelemetryEnabled.Image = AppSettings.TelemetryEnabled ? Images.EyeOpened : Images.EyeClosed;
         }
 
         #region Working directory combo box
@@ -2019,11 +2014,6 @@ namespace GitUI.CommandsDialogs
             }
         }
 
-        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
-        {
-            statusStrip.Hide();
-        }
-
         private void BisectClick(object sender, EventArgs e)
         {
             using (var frm = new FormBisect(RevisionGrid))
@@ -2365,8 +2355,6 @@ namespace GitUI.CommandsDialogs
             revisionDiff.InitSplitterManager(_splitterManager);
             fileTree.InitSplitterManager(_splitterManager);
 
-            // hide status in order to restore splitters against the full height (the most common case)
-            statusStrip.Hide();
             _splitterManager.RestoreSplitters();
             RefreshLayoutToggleButtonStates();
         }
@@ -3221,6 +3209,11 @@ namespace GitUI.CommandsDialogs
             {
                 e.Effect = DragDropEffects.Move;
             }
+        }
+
+        private void TsslblTelemetryEnabled_Click(object sender, EventArgs e)
+        {
+            UICommands.StartGeneralSettingsDialog(this);
         }
     }
 }

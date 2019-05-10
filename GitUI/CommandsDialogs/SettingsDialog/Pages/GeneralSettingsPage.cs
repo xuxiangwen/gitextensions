@@ -34,6 +34,11 @@ namespace GitUI.CommandsDialogs.SettingsDialog.Pages
             });
         }
 
+        public static SettingsPageReference GetPageReference()
+        {
+            return new SettingsPageReferenceByType(typeof(GeneralSettingsPage));
+        }
+
         protected override void OnRuntimeLoad()
         {
             base.OnRuntimeLoad();

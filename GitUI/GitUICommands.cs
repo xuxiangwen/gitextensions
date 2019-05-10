@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GitCommands;
 using GitCommands.Git;
@@ -1122,6 +1121,11 @@ namespace GitUI
             {
                 StartUpdateSubmodulesDialog(win);
             }
+        }
+
+        public bool StartGeneralSettingsDialog(IWin32Window owner)
+        {
+            return StartSettingsDialog(owner, CommandsDialogs.SettingsDialog.Pages.GeneralSettingsPage.GetPageReference());
         }
 
         public bool StartPluginSettingsDialog(IWin32Window owner)
